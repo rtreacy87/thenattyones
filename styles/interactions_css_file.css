@@ -1,0 +1,509 @@
+/* ==========================================================================
+   Interactions & Animations - Enhanced User Experience
+   ========================================================================== */
+
+/* Tooltip Container System */
+.tooltip-container {
+    position: absolute;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all var(--transition-normal);
+    max-width: 320px;
+    font-family: var(--font-family-sans);
+}
+
+.tooltip-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Tooltip Content Box */
+.tooltip-content {
+    background: rgba(44, 24, 16, 0.95);
+    color: var(--parchment-light);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-strong);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Tooltip Header */
+.tooltip-header {
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tooltip-title {
+    font-weight: bold;
+    font-size: var(--font-size-sm);
+    color: var(--parchment-light);
+}
+
+.tooltip-type {
+    font-size: var(--font-size-xs);
+    color: var(--gold-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+/* Tooltip Body */
+.tooltip-body {
+    padding: var(--space-md);
+}
+
+.tooltip-description {
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+    margin-bottom: var(--space-sm);
+    color: var(--parchment-light);
+}
+
+.tooltip-details {
+    font-size: var(--font-size-xs);
+    color: rgba(244, 241, 232, 0.8);
+    line-height: 1.4;
+}
+
+.tooltip-details:empty {
+    display: none;
+}
+
+/* Tooltip Arrow */
+.tooltip-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+.tooltip-container.bottom .tooltip-arrow {
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid rgba(44, 24, 16, 0.95);
+}
+
+.tooltip-container.top .tooltip-arrow {
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid rgba(44, 24, 16, 0.95);
+}
+
+/* Character-Specific Tooltip Styling */
+.tooltip-container.character .tooltip-header {
+    background: linear-gradient(135deg, var(--magic-purple), rgba(123, 31, 162, 0.8));
+}
+
+.tooltip-container.character .tooltip-type {
+    color: var(--parchment-light);
+}
+
+/* Location-Specific Tooltip Styling */
+.tooltip-container.location .tooltip-header {
+    background: linear-gradient(135deg, var(--frost-blue), rgba(79, 195, 247, 0.8));
+}
+
+.tooltip-container.location .tooltip-type {
+    color: var(--ink-primary);
+}
+
+/* Item-Specific Tooltip Styling */
+.tooltip-container.item .tooltip-header {
+    background: linear-gradient(135deg, var(--gold-accent), rgba(255, 179, 0, 0.8));
+}
+
+.tooltip-container.item .tooltip-type {
+    color: var(--ink-primary);
+}
+
+/* Event-Specific Tooltip Styling */
+.tooltip-container.event .tooltip-header {
+    background: linear-gradient(135deg, var(--vampire-red), rgba(198, 40, 40, 0.8));
+}
+
+.tooltip-container.event .tooltip-type {
+    color: var(--parchment-light);
+}
+
+/* Enhanced Hover Effects */
+.character-name:hover,
+.location:hover,
+.item:hover,
+.event:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus States for Accessibility */
+.character-name:focus,
+.location:focus,
+.item:focus,
+.event:focus {
+    outline: 2px solid var(--focus-blue);
+    outline-offset: 2px;
+    transform: none;
+}
+
+/* Loading Animations */
+.letter-reveal {
+    animation: fadeInFromPaper 1.5s ease-out;
+}
+
+@keyframes fadeInFromPaper {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.98);
+        filter: blur(2px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+/* Signature Animation */
+.signature-name {
+    animation: signatureWrite 2s ease-out 0.5s both;
+}
+
+@keyframes signatureWrite {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translateX(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Interactive Element Pulse Animation */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 179, 0, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 8px rgba(255, 179, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 179, 0, 0);
+    }
+}
+
+/* Subtle highlight animation for important elements */
+.item[data-item="netherese_stones"],
+.item[data-item="radiant_bracers"] {
+    animation: pulse 3s infinite;
+}
+
+/* Letter Paper Texture Enhancement */
+.vellynne-letter::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(123, 31, 162, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(79, 195, 247, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    border-radius: var(--border-radius);
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+}
+
+.vellynne-letter:hover::after {
+    opacity: 1;
+}
+
+/* Mobile Touch Interactions */
+@media (hover: none) and (pointer: coarse) {
+    .character-name,
+    .location,
+    .item,
+    .event {
+        -webkit-tap-highlight-color: transparent;
+        padding: var(--space-xs) var(--space-sm);
+        margin: -2px -4px;
+        border-radius: 3px;
+    }
+    
+    .character-name:active,
+    .location:active,
+    .item:active,
+    .event:active {
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: scale(0.98);
+    }
+    
+    .tooltip-container {
+        max-width: 280px;
+        font-size: var(--font-size-sm);
+    }
+}
+
+/* Scroll-triggered Animations */
+.letter-paragraph {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-out;
+}
+
+.letter-paragraph.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered animation delays for paragraphs */
+.letter-paragraph:nth-child(1) { transition-delay: 0.1s; }
+.letter-paragraph:nth-child(2) { transition-delay: 0.2s; }
+.letter-paragraph:nth-child(3) { transition-delay: 0.3s; }
+.letter-paragraph:nth-child(4) { transition-delay: 0.4s; }
+.letter-paragraph:nth-child(5) { transition-delay: 0.5s; }
+.letter-paragraph:nth-child(6) { transition-delay: 0.6s; }
+
+/* Magical Sparkle Effect for Interactive Elements */
+.magical-highlight {
+    position: relative;
+    overflow: visible;
+}
+
+.magical-highlight::before {
+    content: '✦';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: var(--font-size-xs);
+    color: var(--gold-accent);
+    opacity: 0;
+    transform: scale(0.5) rotate(0deg);
+    transition: all var(--transition-normal);
+    pointer-events: none;
+}
+
+.magical-highlight:hover::before {
+    opacity: 1;
+    transform: scale(1) rotate(180deg);
+    animation: sparkle 1.5s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1) rotate(180deg);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.2) rotate(360deg);
+    }
+}
+
+/* Tooltip Position Variants */
+.tooltip-container.left .tooltip-arrow {
+    top: 50%;
+    right: -8px;
+    transform: translateY(-50%);
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid rgba(44, 24, 16, 0.95);
+}
+
+.tooltip-container.right .tooltip-arrow {
+    top: 50%;
+    left: -8px;
+    transform: translateY(-50%);
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid rgba(44, 24, 16, 0.95);
+}
+
+/* Enhanced Focus Ring for Keyboard Navigation */
+.letter-body *:focus {
+    outline: 2px solid var(--focus-blue);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* High Contrast Adjustments */
+@media (prefers-contrast: high) {
+    .tooltip-content {
+        background: black;
+        border: 2px solid white;
+        color: white;
+    }
+    
+    .tooltip-arrow,
+    .tooltip-container.bottom .tooltip-arrow,
+    .tooltip-container.top .tooltip-arrow,
+    .tooltip-container.left .tooltip-arrow,
+    .tooltip-container.right .tooltip-arrow {
+        border-color: white;
+    }
+    
+    .character-name:hover,
+    .location:hover,
+    .item:hover,
+    .event:hover {
+        background-color: yellow;
+        color: black;
+    }
+}
+
+/* Smooth Scrolling Enhancement */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Letter Content Animation on Load */
+.vellynne-letter.loaded {
+    animation: letterUnfold 1s ease-out;
+}
+
+@keyframes letterUnfold {
+    0% {
+        transform: rotateX(-90deg);
+        transform-origin: top;
+        opacity: 0;
+    }
+    50% {
+        transform: rotateX(-45deg);
+        opacity: 0.5;
+    }
+    100% {
+        transform: rotateX(0deg);
+        opacity: 1;
+    }
+}
+
+/* Interactive Element State Management */
+.interactive-element {
+    transition: all var(--transition-fast);
+    position: relative;
+    display: inline-block;
+}
+
+.interactive-element.highlighted {
+    background-color: rgba(255, 179, 0, 0.15);
+    border-radius: 3px;
+    padding: 1px 3px;
+    margin: -1px -3px;
+}
+
+.interactive-element.selected {
+    background-color: rgba(33, 150, 243, 0.2);
+    color: var(--ink-primary);
+    font-weight: 600;
+}
+
+/* Loading State for Interactive Elements */
+.interactive-element.loading {
+    position: relative;
+    color: transparent;
+}
+
+.interactive-element.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    margin: -6px 0 0 -6px;
+    border: 2px solid var(--parchment-dark);
+    border-top-color: var(--magic-purple);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+/* Responsive Tooltip Adjustments */
+@media (max-width: 768px) {
+    .tooltip-container {
+        max-width: 250px;
+        font-size: var(--font-size-xs);
+    }
+    
+    .tooltip-header {
+        padding: var(--space-xs) var(--space-sm);
+    }
+    
+    .tooltip-body {
+        padding: var(--space-sm);
+    }
+    
+    .tooltip-title {
+        font-size: var(--font-size-xs);
+    }
+    
+    .tooltip-type {
+        font-size: 10px;
+    }
+}
+
+/* Accessibility: Respect User Preferences */
+@media (prefers-reduced-motion: reduce) {
+    .letter-reveal,
+    .signature-name,
+    .letter-paragraph,
+    .magical-highlight::before,
+    .interactive-element {
+        animation: none;
+        transition: none;
+    }
+    
+    .vellynne-letter.loaded {
+        animation: none;
+    }
+    
+    .tooltip-container {
+        transition: opacity 0.1s ease;
+    }
+}
+
+/* Dark Mode Support (if enabled by user) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --parchment-base: #2c2417;
+        --parchment-light: #3d3024;
+        --ink-primary: #f4f1e8;
+        --ink-secondary: #e8e1d1;
+    }
+    
+    .vellynne-letter {
+        background: rgba(44, 36, 23, 0.95);
+        color: var(--ink-primary);
+    }
+    
+    .tooltip-content {
+        background: rgba(244, 241, 232, 0.95);
+        color: var(--ink-primary);
+    }
+    
+    .tooltip-arrow,
+    .tooltip-container.bottom .tooltip-arrow,
+    .tooltip-container.top .tooltip-arrow {
+        border-bottom-color: rgba(244, 241, 232, 0.95);
+        border-top-color: rgba(244, 241, 232, 0.95);
+    }
+}
+    
