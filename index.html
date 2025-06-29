@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Correspondence from Vellynne Harpell to Rothbart - Icewind Dale Campaign">
+    <meta name="author" content="Vellynne Harpell, Tenth Black Staff of Blackstaff Academy">
+    <title>Letter from Vellynne Harpell | Icewind Dale Campaign</title>
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="assets/BrotherSignature.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="assets/paper.jpg" as="image">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/letter.css">
+    <link rel="stylesheet" href="styles/interactions.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+</head>
+
+<body class="parchment-background">
+    <!-- Loading indicator -->
+    <div id="loading-overlay" class="loading-screen">
+        <div class="loading-content">
+            <div class="magical-spinner"></div>
+            <p>Preparing correspondence...</p>
+        </div>
+    </div>
+
+    <!-- Main letter container -->
+    <main class="letter-container" role="main">
+        <!-- Letter article with semantic structure -->
+        <article class="vellynne-letter" itemscope itemtype="http://schema.org/Letter">
+            
+            <!-- Letter header with metadata -->
+            <header class="letter-header">
+                <div class="sender-info">
+                    <h1 class="sender-title" itemprop="sender">Correspondence from Vellynne Harpell</h1>
+                    <h2 class="sender-subtitle">Tenth Black Staff of Blackstaff Academy</h2>
+                </div>
+                
+                <div class="letter-metadata">
+                    <time class="letter-date" datetime="1489" itemprop="dateCreated">
+                        1489 DR, Hammer (Second Tenday)
+                    </time>
+                    <div class="recipient-info">
+                        <span class="recipient-label">To:</span>
+                        <span class="recipient-name" 
+                              data-character="rothbart" 
+                              data-tooltip="Dampir Paladin - Undead-touched holy warrior with complex moral code"
+                              itemprop="recipient">Rothbart</span>
+                    </div>
+                    <div class="delivery-method" itemprop="deliveryMethod">
+                        <em>Delivered by snowy owl familiar to the 
+                           <span class="location" 
+                                 data-location="northlook_inn"
+                                 data-tooltip="Inn in Bryn Shander - Current party lodging">Northlook Inn</span>
+                        </em>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Letter content body -->
+            <section class="letter-body" itemprop="text">
+                
+                <!-- Greeting -->
+                <div class="letter-greeting">
+                    <p>Dear <span class="character-name" 
+                                  data-character="rothbart"
+                                  data-tooltip="The dampir paladin recipient of this correspondence">Rothbart</span>,</p>
+                </div>
+
+                <!-- Paragraph 1: Recent events acknowledgment -->
+                <div class="letter-paragraph" data-paragraph="1">
+                    <p>I trust this missive finds you well-rested after your eventful journey from 
+                       <span class="location" 
+                             data-location="east_haven"
+                             data-tooltip="Destroyed town - Former location devastated by dragon attack">East Haven</span>. 
+                       Word travels quickly through 
+                       <span class="location" 
+                             data-location="bryn_shander"
+                             data-tooltip="Fortified town serving as refugee center and Ten Towns hub">Bryn Shander</span>, 
+                       and your party's heroic escort of seven hundred refugees has not gone unnoticed. The town buzzes with tales of your group's valor against the 
+                       <span class="event" 
+                             data-event="vampire_yeti_attack"
+                             data-tooltip="Session 2 Event: Coordinated vampire-yeti assault on refugee caravan">vampire-yeti assault</span>.</p>
+                </div>
+
+                <!-- Paragraph 2: Research findings -->
+                <div class="letter-paragraph" data-paragraph="2">
+                    <p>Following our meeting in 
+                       <span class="location" 
+                             data-location="bryn_shander"
+                             data-tooltip="Central town where emergency council meeting occurred">Bryn Shander</span>, 
+                       I took the liberty of returning to the battlefield to retrieve the vampire brides' remains for study. Such specimens rarely present themselves for examination, and I suspect their condition may reveal crucial intelligence about the undead threat we face. I will keep you apprised of any findings that emerge from my research. How curious that a being touched by undeath should prove so effective at thwarting vampiric predators—your divine powers clearly burned particularly bright against those pale-skinned seductresses.</p>
+                </div>
+
+                <!-- Paragraph 3: Netherese artifacts discussion -->
+                <div class="letter-paragraph" data-paragraph="3">
+                    <p>The magical theorist in me is absolutely fascinated by your acquisition of those 
+                       <span class="item" 
+                             data-item="netherese_stones"
+                             data-tooltip="Ancient magical artifacts - Keys to Ythryn with power amplification abilities">Netherese artifacts</span> 
+                       from 
+                       <span class="location" 
+                             data-location="targos"
+                             data-tooltip="Town controlled by Speaker Naerth Maxildannar - Source of political complications">Targos</span>. 
+                       The stones you carry represent some of the most sophisticated enchantment work from the fallen empire—devices capable of anchoring tremendous magical energies to specific locations. Your visit to 
+                       <span class="location" 
+                             data-location="black_iron_blades"
+                             data-tooltip="Weapons and magical items shop - Site of major equipment upgrades">Black Iron Blades</span> 
+                       was quite the spectacle, I'm told. The transformation of that 
+                       <span class="item" 
+                             data-item="dragon_heart"
+                             data-tooltip="Red dragon heart forged into Bracers of Radiant Exuberance">red dragon heart</span> 
+                       into those rather impressive 
+                       <span class="item" 
+                             data-item="radiant_bracers"
+                             data-tooltip="Magical bracers providing cold resistance and enhanced fire/radiant magic">bracers</span> 
+                       must have been remarkable to witness.</p>
+                </div>
+
+                <!-- Paragraph 4: Political intelligence request -->
+                <div class="letter-paragraph" data-paragraph="4">
+                    <p>I would be most interested to hear your firsthand account of the audience with 
+                       <span class="character-name" 
+                             data-character="duvessa"
+                             data-tooltip="Speaker Duvessa Shane - Leader of Bryn Shander and primary quest giver">Speaker Duvessa</span>, 
+                       particularly regarding the political maneuvering you witnessed. My sources suggest 
+                       <span class="character-name" 
+                             data-character="naerth"
+                             data-tooltip="Naerth Maxildannar - Evil Speaker of Targos and political rival">Naerth Maxildannar's</span> 
+                       presence complicated matters considerably. Did your enhanced senses detect anything unusual about the 
+                       <span class="location" 
+                             data-location="targos"
+                             data-tooltip="Naerth's domain - Source of Zentarim influence in Ten Towns">Targos delegation</span>? 
+                       Such intelligence could prove valuable as we navigate the increasingly treacherous political landscape of the Ten Towns.</p>
+                </div>
+
+                <!-- Paragraph 5: Wealth and preparation -->
+                <div class="letter-paragraph" data-paragraph="5">
+                    <p>Your party's newfound wealth—
+                       <span class="item" 
+                             data-item="diamonds"
+                             data-tooltip="10,000 gold worth of diamonds - Reward from Duvessa for stopping sacrifices">ten thousand gold in diamonds</span>, 
+                       I hear—positions you perfectly for the challenges ahead. Though I suspect you view my research with distaste, the practical applications of necromantic knowledge may prove essential in dealing with both the undead threat at 
+                       <span class="location" 
+                             data-location="reghed_glacier"
+                             data-tooltip="Treacherous frozen wasteland - Location of vampire master and ancient Netherese city">Reghed Glacier</span> 
+                       and our upcoming rendezvous with your 
+                       <span class="character-name" 
+                             data-character="illithid"
+                             data-tooltip="Mind flayer ally with Nautiloid ship - Key to transportation challenges">Illithid acquaintance</span>. 
+                       Sometimes the most distasteful tools prove the most effective.</p>
+                </div>
+
+                <!-- Paragraph 6: Future collaboration -->
+                <div class="letter-paragraph" data-paragraph="6">
+                    <p>I look forward to our meeting at the 
+                       <span class="location" 
+                             data-location="northlook_inn"
+                             data-tooltip="Inn in Bryn Shander where party is currently staying">Northlook</span>, 
+                       where we can discuss strategy for locating 
+                       <span class="character-name" 
+                             data-character="dzaan"
+                             data-tooltip="Executed Brotherhood member - Had research on accessing Netherese spire">Dzaan's spire</span> 
+                       and accessing the 
+                       <span class="item" 
+                             data-item="nautiloid"
+                             data-tooltip="Illithid ship - Transportation solution for reaching inaccessible locations">Nautiloid</span>. 
+                       The threads of fate seem to be drawing together—vampire masters, ancient cities, and aberrant allies. Quite the tapestry we're weaving, wouldn't you agree?</p>
+                </div>
+
+                <!-- Closing -->
+                <div class="letter-closing">
+                    <p>With anticipation of our collaboration,</p>
+                </div>
+
+                <!-- Signature -->
+                <div class="letter-signature">
+                    <p class="signature-name">Vellynne Harpell</p>
+                    <p class="signature-title">Tenth Black Staff of Blackstaff Academy</p>
+                </div>
+
+                <!-- Postscript -->
+                <div class="letter-postscript">
+                    <p><strong>P.S.</strong> I've heard remarkable things about a new 
+                       <span class="item" 
+                             data-item="mechanical_arm"
+                             data-tooltip="Dwarven mechanical arm converted to third-arm fighting attachment">three-armed fighting technique</span>. 
+                       Such adaptability in combat suggests you're becoming more comfortable with unconventional solutions—a promising development for what lies ahead.</p>
+                </div>
+
+            </section>
+
+            <!-- Letter footer -->
+            <footer class="letter-footer">
+                <div class="campaign-attribution">
+                    <p><em>From the Icewind Dale Campaign Archives</em></p>
+                    <p><small>Session 2 Correspondence | 1489 DR</small></p>
+                </div>
+            </footer>
+
+        </article>
+    </main>
+
+    <!-- Tooltip container for dynamic content -->
+    <div id="tooltip-container" class="tooltip-container" role="tooltip" aria-hidden="true">
+        <div class="tooltip-content">
+            <div class="tooltip-header">
+                <span class="tooltip-title"></span>
+                <span class="tooltip-type"></span>
+            </div>
+            <div class="tooltip-body">
+                <p class="tooltip-description"></p>
+                <div class="tooltip-details"></div>
+            </div>
+            <div class="tooltip-arrow"></div>
+        </div>
+    </div>
+
+    <!-- Hidden campaign data for JavaScript -->
+    <script type="application/json" id="campaign-data">
+    {
+        "characters": {
+            "rothbart": {
+                "name": "Rothbart",
+                "type": "Dampir Paladin",
+                "description": "Undead-touched holy warrior with complex moral code",
+                "relationship": "Ally with philosophical differences",
+                "abilities": "Divine sense, vampire resistance"
+            },
+            "duvessa": {
+                "name": "Duvessa Shane",
+                "type": "Town Speaker",
+                "description": "Leader of Bryn Shander, political ally",
+                "location": "Bryn Shander",
+                "role": "Primary quest giver"
+            },
+            "naerth": {
+                "name": "Naerth Maxildannar",
+                "type": "Town Speaker",
+                "description": "Evil Speaker of Targos and political rival",
+                "location": "Targos",
+                "allegiance": "Zentarim"
+            },
+            "illithid": {
+                "name": "Freed Mind Flayer",
+                "type": "Aberration",
+                "description": "Mind flayer ally with Nautiloid ship",
+                "relationship": "Tentative ally",
+                "capabilities": "Interplanar travel"
+            },
+            "dzaan": {
+                "name": "Dzaan",
+                "type": "Wizard (Deceased)",
+                "description": "Executed Brotherhood member",
+                "research": "Netherese spire access",
+                "status": "Dead"
+            }
+        },
+        "locations": {
+            "bryn_shander": {
+                "name": "Bryn Shander",
+                "type": "Fortified Town",
+                "description": "Central hub for Ten Towns defense",
+                "status": "Under siege preparations",
+                "population": "Refugee center"
+            },
+            "reghed_glacier": {
+                "name": "Reghed Glacier",
+                "type": "Frozen Wasteland",
+                "description": "Treacherous territory with ancient secrets",
+                "threats": "Vampire forces, Netherese ruins",
+                "accessibility": "Currently impassable"
+            },
+            "targos": {
+                "name": "Targos",
+                "type": "Town",
+                "description": "Controlled by Naerth Maxildannar",
+                "politics": "Zentarim influence",
+                "relationship": "Complicated"
+            }
+        },
+        "items": {
+            "netherese_stones": {
+                "name": "Netherese Artifacts",
+                "type": "Ancient Magic Items",
+                "description": "Keys to Ythryn with power amplification",
+                "abilities": "Space-time anchoring, city access"
+            },
+            "radiant_bracers": {
+                "name": "Bracers of Radiant Exuberance",
+                "type": "Magical Bracers",
+                "description": "Cold resistance and enhanced magic",
+                "effects": "Fire/radiant damage boost"
+            }
+        },
+        "events": {
+            "vampire_yeti_attack": {
+                "name": "Vampire-Yeti Assault",
+                "session": 2,
+                "description": "Coordinated attack on refugee caravan",
+                "outcome": "Successfully repelled, refugees saved"
+            }
+        }
+    }
+    </script>
+
+    <!-- JavaScript files -->
+    <script src="scripts/content-loader.js"></script>
+    <script src="scripts/tooltip-system.js"></script>
+    <script src="scripts/responsive.js"></script>
+
+    <!-- Initialize application -->
+    <script>
+        // Initialize letter interactivity when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load campaign data
+            ContentLoader.initialize();
+            
+            // Setup interactive tooltips
+            TooltipSystem.initialize();
+            
+            // Configure responsive behavior
+            ResponsiveLayout.initialize();
+            
+            // Hide loading screen
+            document.getElementById('loading-overlay').style.display = 'none';
+        });
+    </script>
+
+</body>
+</html>
