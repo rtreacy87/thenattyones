@@ -1,4 +1,6 @@
-// Component-based rendering system
+// Component-based rendering system with proper name lookups
+import { CampaignData } from '../data/campaign-data.js';
+
 class ComponentRenderer {
     constructor() {
         this.components = new Map();
@@ -6,7 +8,6 @@ class ComponentRenderer {
     }
     
     registerDefaultComponents() {
-        // Register inline component definitions (no separate files needed)
         this.components.set('letter-header', new LetterHeaderComponent());
         this.components.set('letter-body', new LetterBodyComponent());
         this.components.set('letter-footer', new LetterFooterComponent());
@@ -23,7 +24,7 @@ class ComponentRenderer {
         const body = this.renderComponent('letter-body', letterData.content);
         letterElement.appendChild(body);
         
-        // Render footer (if needed)
+        // Render footer
         const footer = this.renderComponent('letter-footer', letterData.metadata);
         letterElement.appendChild(footer);
         
@@ -53,7 +54,7 @@ class ComponentRenderer {
     }
 }
 
-// Component class definitions (included in same file for simplicity)
+// Component class definitions
 class LetterHeaderComponent {
     render(metadata) {
         const header = document.createElement('header');
@@ -94,7 +95,7 @@ class LetterBodyComponent {
         if (content.greeting) {
             const greeting = document.createElement('div');
             greeting.className = 'letter-greeting';
-            greeting.innerHTML = `<p>${content.greeting}</p>`;
+            greeting.innerHTML = `<p>${this.processText(content.greeting)}</p>`;
             section.appendChild(greeting);
         }
         
@@ -110,7 +111,7 @@ class LetterBodyComponent {
         if (content.closing) {
             const closing = document.createElement('div');
             closing.className = 'letter-closing';
-            closing.innerHTML = `<p>${content.closing}</p>`;
+            closing.innerHTML = `<p>${this.processText(content.closing)}</p>`;
             section.appendChild(closing);
         }
         
@@ -129,7 +130,7 @@ class LetterBodyComponent {
         if (content.postscript) {
             const postscript = document.createElement('div');
             postscript.className = 'letter-postscript';
-            postscript.innerHTML = `<p><strong>P.S.</strong> ${content.postscript}</p>`;
+            postscript.innerHTML = `<p><strong>P.S.</strong> ${this.processText(content.postscript)}</p>`;
             section.appendChild(postscript);
         }
         
@@ -149,19 +150,28 @@ class LetterBodyComponent {
     }
     
     processText(text) {
-        // Process character references
-        text = text.replace(/\{character:(\w+)\}/g, 
-            '<span class="character-ref" data-character="$1">$1</span>');
+        // Process character references with proper name lookup
+        text = text.replace(/\{character:(\w+)\}/g, (match, id) => {
+            const characterData = CampaignData.getCharacter(id);
+            const displayName = characterData.name || id;
+            return `<span class="character-ref" data-character="${id}">${displayName}</span>`;
+        });
         
-        // Process location references
-        text = text.replace(/\{location:(\w+)\}/g, 
-            '<span class="location-ref" data-location="$1">$1</span>');
+        // Process location references with proper name lookup
+        text = text.replace(/\{location:(\w+)\}/g, (match, id) => {
+            const locationData = CampaignData.getLocation(id);
+            const displayName = locationData.name || id;
+            return `<span class="location-ref" data-location="${id}">${displayName}</span>`;
+        });
         
-        // Process item references
-        text = text.replace(/\{item:(\w+)\}/g, 
-            '<span class="item-ref" data-item="$1">$1</span>');
+        // Process item references with proper name lookup
+        text = text.replace(/\{item:(\w+)\}/g, (match, id) => {
+            const itemData = CampaignData.getItem(id);
+            const displayName = itemData.name || id;
+            return `<span class="item-ref" data-item="${id}">${displayName}</span>`;
+        });
         
-        // Process event references
+        // Process event references (keep as-is for now)
         text = text.replace(/\{event:(\w+)\}/g, 
             '<span class="event-ref" data-event="$1">$1</span>');
         
