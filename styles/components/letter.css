@@ -1,0 +1,152 @@
+/* Letter component styling */
+.vellynne-letter {
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    padding: var(--spacing-large);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: letterAppear 1s ease-out;
+}
+
+@keyframes letterAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Letter header styling */
+.letter-header {
+    border-bottom: 2px solid var(--color-accent);
+    padding-bottom: var(--spacing-medium);
+    margin-bottom: var(--spacing-large);
+}
+
+.sender-info {
+    text-align: center;
+    margin-bottom: var(--spacing-medium);
+}
+
+.sender-title {
+    font-size: 2.2rem;
+    color: var(--color-accent);
+    margin-bottom: var(--spacing-small);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.sender-subtitle {
+    font-size: 1.3rem;
+    color: var(--color-faded-ink);
+    font-style: italic;
+    margin-bottom: 0;
+}
+
+.letter-metadata {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-small);
+    font-size: 0.95rem;
+    color: var(--color-faded-ink);
+}
+
+.letter-date {
+    font-weight: bold;
+    color: var(--color-ink);
+}
+
+.recipient-info {
+    display: flex;
+    gap: var(--spacing-small);
+}
+
+.recipient-name {
+    font-weight: bold;
+    color: var(--color-accent);
+}
+
+/* Letter body styling */
+.letter-body {
+    margin: var(--spacing-large) 0;
+}
+
+.letter-greeting {
+    margin-bottom: var(--spacing-large);
+    font-size: 1.2rem;
+}
+
+.letter-paragraph {
+    margin-bottom: var(--spacing-large);
+    position: relative;
+}
+
+.letter-paragraph p {
+    text-indent: 2rem;
+    margin-bottom: var(--spacing-medium);
+}
+
+.letter-paragraph:first-of-type p {
+    text-indent: 0;
+}
+
+/* Letter closing and signature */
+.letter-closing {
+    margin: var(--spacing-large) 0 var(--spacing-medium) 0;
+    text-align: left;
+    font-style: italic;
+}
+
+.letter-signature {
+    text-align: right;
+    margin: var(--spacing-large) 0;
+}
+
+.signature-name {
+    font-family: var(--signature-font);
+    font-size: 1.8rem;
+    color: var(--color-accent);
+    margin-bottom: var(--spacing-small);
+}
+
+.signature-title {
+    font-size: 1rem;
+    color: var(--color-faded-ink);
+    font-style: italic;
+}
+
+/* Postscript styling */
+.letter-postscript {
+    margin-top: var(--spacing-large);
+    padding-top: var(--spacing-medium);
+    border-top: 1px solid var(--color-faded-ink);
+    font-size: 0.95rem;
+    font-style: italic;
+}
+
+.letter-postscript strong {
+    color: var(--color-accent);
+    font-style: normal;
+}
+
+/* Letter footer */
+.letter-footer {
+    margin-top: var(--spacing-large);
+    padding-top: var(--spacing-medium);
+    border-top: 2px solid var(--color-accent);
+    text-align: center;
+}
+
+.campaign-attribution {
+    font-size: 0.85rem;
+    color: var(--color-faded-ink);
+    font-style: italic;
+}
+
+.campaign-attribution p {
+    margin-bottom: var(--spacing-small);
+}

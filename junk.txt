@@ -1,0 +1,12 @@
+    <!-- Loading indicator -->
+    <div id="loading-overlay" class="loading-screen">
+        <div class="loading-content">
+            <div class="magical-spinner"></div>
+            <p>Preparing correspondence...</p>
+        </div>
+    </div>
+
+
+    <div id="app-container" role="main">
+        <div id="loading-indicator" aria-live="polite">Loading letter...</div>
+    </div>

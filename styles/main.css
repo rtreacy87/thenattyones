@@ -1,0 +1,63 @@
+/* Main CSS file - imports and coordination only */
+@import url('./base.css');
+@import url('./components/letter.css');
+@import url('./components/tooltip.css');
+@import url('./components/header.css');
+@import url('./utilities/responsive.css');
+@import url('./utilities/themes.css');
+
+/* Font loading */
+@font-face {
+    font-family: 'BrotherSignature';
+    src: url('../assets/BrotherSignature.otf') format('opentype');
+    font-display: swap;
+}
+
+/* CSS Custom Properties */
+:root {
+    --paper-background: url('../assets/paper.jpg');
+    --signature-font: 'BrotherSignature', serif;
+    --body-font: 'BrotherSignature', serif;
+    --color-ink: #2c2c2c;
+    --color-faded-ink: #666;
+    --color-accent: #8b4513;
+    --spacing-small: 0.5rem;
+    --spacing-medium: 1rem;
+    --spacing-large: 2rem;
+    --border-radius: 4px;
+    --transition-speed: 0.3s;
+}
+
+/* Global application container */
+#app-container {
+    min-height: 100vh;
+    padding: var(--spacing-large);
+    background: var(--paper-background) center/cover no-repeat;
+}
+
+/* Loading and error states */
+#loading-indicator {
+    text-align: center;
+    font-family: var(--body-font);
+    color: var(--color-ink);
+    padding: var(--spacing-large);
+    font-size: 1.2rem;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.error-message {
+    background: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    color: #721c24;
+    padding: var(--spacing-medium);
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-family: var(--body-font);
+    margin: var(--spacing-large) auto;
+    max-width: 600px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

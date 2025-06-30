@@ -1,0 +1,117 @@
+/* Tooltip system styling */
+.tooltip-container {
+    position: absolute;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-speed) ease, 
+                visibility var(--transition-speed) ease;
+    pointer-events: none;
+}
+
+.tooltip-container.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.tooltip-content {
+    background: #2c3e50;
+    color: #ecf0f1;
+    padding: var(--spacing-medium);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    max-width: 300px;
+    position: relative;
+    font-family: var(--body-font);
+    line-height: 1.4;
+}
+
+.tooltip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-small);
+    padding-bottom: var(--spacing-small);
+    border-bottom: 1px solid rgba(236, 240, 241, 0.3);
+}
+
+.tooltip-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #3498db;
+}
+
+.tooltip-type {
+    font-size: 0.8rem;
+    color: #95a5a6;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tooltip-body {
+    font-size: 0.9rem;
+}
+
+.tooltip-description {
+    margin-bottom: var(--spacing-small);
+    color: #bdc3c7;
+}
+
+.tooltip-details {
+    font-size: 0.8rem;
+    color: #95a5a6;
+}
+
+/* Tooltip arrow */
+.tooltip-arrow {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #2c3e50;
+}
+
+.tooltip-container.below .tooltip-arrow {
+    top: -8px;
+    bottom: auto;
+    border-top: none;
+    border-bottom: 8px solid #2c3e50;
+}
+
+/* Character-specific tooltip styling */
+.tooltip-container[data-type="character"] .tooltip-title {
+    color: #e74c3c;
+}
+
+.tooltip-container[data-type="location"] .tooltip-title {
+    color: #27ae60;
+}
+
+.tooltip-container[data-type="item"] .tooltip-title {
+    color: #f39c12;
+}
+
+.tooltip-container[data-type="event"] .tooltip-title {
+    color: #9b59b6;
+}
+
+/* Responsive tooltip sizing */
+@media (max-width: 768px) {
+    .tooltip-content {
+        max-width: 250px;
+        padding: var(--spacing-small);
+    }
+    
+    .tooltip-title {
+        font-size: 1rem;
+    }
+    
+    .tooltip-body {
+        font-size: 0.85rem;
+    }
+}

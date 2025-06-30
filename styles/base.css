@@ -1,247 +1,111 @@
-/* ==========================================================================
-   Base Styles - Foundation CSS for Vellynne Harpell Letter
-   ========================================================================== */
-
-/* Font Loading - Custom BrotherSignature Font */
-@font-face {
-    font-family: 'BrotherSignature';
-    src: url('../assets/BrotherSignature.otf') format('opentype');
-    font-display: swap; /* Improves perceived performance */
-    font-weight: normal;
-    font-style: normal;
-}
-
-/* CSS Custom Properties - Design Token System */
-:root {
-    /* Primary Color Palette - Parchment Theme */
-    --parchment-base: #f4f1e8;
-    --parchment-light: #faf8f3;
-    --parchment-dark: #e8e1d1;
-    
-    /* Ink Colors - Text Hierarchy */
-    --ink-primary: #2c1810;
-    --ink-secondary: #5d4037;
-    --ink-tertiary: #8d6e63;
-    --ink-light: #a1887f;
-    
-    /* Campaign Theme Colors */
-    --frost-blue: #4fc3f7;
-    --vampire-red: #c62828;
-    --magic-purple: #7b1fa2;
-    --undead-gray: #616161;
-    --gold-accent: #ffb300;
-    
-    /* Interactive States */
-    --hover-gold: #ffc107;
-    --active-amber: #ff8f00;
-    --focus-blue: #2196f3;
-    --text-selection: rgba(255, 193, 7, 0.3);
-    
-    /* Typography Scale */
-    --font-family-signature: 'BrotherSignature', cursive;
-    --font-family-serif: 'Times New Roman', 'Georgia', serif;
-    --font-family-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    
-    /* Font Sizes - Modular Scale */
-    --font-size-xs: 0.75rem;    /* 12px */
-    --font-size-sm: 0.875rem;   /* 14px */
-    --font-size-base: 1rem;     /* 16px */
-    --font-size-lg: 1.125rem;   /* 18px */
-    --font-size-xl: 1.25rem;    /* 20px */
-    --font-size-2xl: 1.5rem;    /* 24px */
-    --font-size-3xl: 1.875rem;  /* 30px */
-    --font-size-4xl: 2.25rem;   /* 36px */
-    
-    /* Spacing System - 8px Grid */
-    --space-xs: 0.25rem;   /* 4px */
-    --space-sm: 0.5rem;    /* 8px */
-    --space-md: 1rem;      /* 16px */
-    --space-lg: 1.5rem;    /* 24px */
-    --space-xl: 2rem;      /* 32px */
-    --space-2xl: 3rem;     /* 48px */
-    --space-3xl: 4rem;     /* 64px */
-    
-    /* Layout Dimensions */
-    --letter-max-width: 900px;
-    --letter-padding: var(--space-xl);
-    --border-radius: 4px;
-    
-    /* Shadows and Effects */
-    --shadow-subtle: 0 1px 3px rgba(44, 24, 16, 0.1);
-    --shadow-medium: 0 4px 6px rgba(44, 24, 16, 0.15);
-    --shadow-strong: 0 10px 15px rgba(44, 24, 16, 0.2);
-    
-    /* Transitions */
-    --transition-fast: 0.15s ease-in-out;
-    --transition-normal: 0.3s ease-in-out;
-    --transition-slow: 0.5s ease-in-out;
-}
-
-/* Reset and Base Styles */
-*, *::before, *::after {
+/* Base typography and layout styles */
+* {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html {
-    font-size: 16px;
-    line-height: 1.6;
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
 }
 
 body {
-    font-family: var(--font-family-serif);
-    font-size: var(--font-size-base);
-    color: var(--ink-primary);
-    background-color: var(--parchment-base);
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    font-family: var(--body-font);
+    line-height: 1.6;
+    color: var(--color-ink);
+    background: var(--paper-background) fixed center/cover;
+    background-attachment: fixed;
 }
 
-/* Typography Base Rules */
+/* Typography hierarchy */
 h1, h2, h3, h4, h5, h6 {
+    font-family: var(--signature-font);
+    margin: 0 0 var(--spacing-medium) 0;
     font-weight: normal;
-    line-height: 1.2;
-    margin-bottom: var(--space-md);
-    color: var(--ink-primary);
+    color: var(--color-ink);
 }
 
-h1 { font-size: var(--font-size-4xl); }
-h2 { font-size: var(--font-size-3xl); }
-h3 { font-size: var(--font-size-2xl); }
-h4 { font-size: var(--font-size-xl); }
-h5 { font-size: var(--font-size-lg); }
-h6 { font-size: var(--font-size-base); }
+h1 { 
+    font-size: 2.5rem;
+    line-height: 1.2;
+}
+
+h2 { 
+    font-size: 2rem;
+    line-height: 1.3;
+}
+
+h3 { 
+    font-size: 1.5rem;
+    line-height: 1.4;
+}
 
 p {
-    margin-bottom: var(--space-md);
+    margin: 0 0 var(--spacing-medium) 0;
+    text-align: justify;
+    text-justify: inter-word;
+    font-size: 1.1rem;
     line-height: 1.7;
 }
 
-/* Links */
-a {
-    color: var(--magic-purple);
-    text-decoration: none;
-    transition: color var(--transition-fast);
+/* Interactive elements base styles */
+.character-ref,
+.location-ref,
+.item-ref,
+.event-ref {
+    position: relative;
+    cursor: help;
+    border-bottom: 1px dotted var(--color-accent);
+    transition: all var(--transition-speed) ease;
+    padding: 1px 2px;
+    border-radius: 2px;
 }
 
-a:hover {
-    color: var(--vampire-red);
-    text-decoration: underline;
+.character-ref:hover,
+.location-ref:hover,
+.item-ref:hover,
+.event-ref:hover {
+    color: var(--color-accent);
+    border-bottom-style: solid;
+    background: rgba(139, 69, 19, 0.1);
 }
 
-a:focus {
-    outline: 2px solid var(--focus-blue);
+/* Focus management for accessibility */
+:focus {
+    outline: 2px solid var(--color-accent);
     outline-offset: 2px;
+    border-radius: var(--border-radius);
 }
 
-/* Text Selection */
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Selection styling */
 ::selection {
-    background-color: var(--text-selection);
-    color: var(--ink-primary);
+    background: rgba(139, 69, 19, 0.3);
+    color: var(--color-ink);
 }
 
-::-moz-selection {
-    background-color: var(--text-selection);
-    color: var(--ink-primary);
+/* Text rendering optimization */
+body {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* Loading Screen Styles */
-.loading-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(135deg, var(--parchment-base), var(--parchment-light));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    transition: opacity var(--transition-slow);
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
-.loading-content {
-    text-align: center;
-    color: var(--ink-secondary);
-}
-
-.loading-content p {
-    font-family: var(--font-family-signature);
-    font-size: var(--font-size-xl);
-    margin-top: var(--space-lg);
-}
-
-/* Magical Spinner Animation */
-.magical-spinner {
-    width: 60px;
-    height: 60px;
-    border: 3px solid var(--parchment-dark);
-    border-top: 3px solid var(--magic-purple);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Accessibility Helpers */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-}
-
-/* Focus Management */
-.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 6px;
-    background: var(--ink-primary);
-    color: var(--parchment-base);
-    padding: 8px;
-    text-decoration: none;
-    transition: top var(--transition-fast);
-}
-
-.skip-link:focus {
-    top: 6px;
-}
-
-/* Print Styles */
-@media print {
+/* High contrast mode support */
+@media (prefers-contrast: high) {
     :root {
-        --ink-primary: #000;
-        --ink-secondary: #333;
-    }
-    
-    body {
-        background: white;
-        color: black;
-        font-size: 12pt;
-    }
-    
-    .loading-screen,
-    .tooltip-container {
-        display: none !important;
-    }
-    
-    .letter-container {
-        background: none !important;
-        padding: 0 !important;
-        max-width: none !important;
+        --color-ink: #000;
+        --color-faded-ink: #333;
+        --color-accent: #000080;
     }
 }

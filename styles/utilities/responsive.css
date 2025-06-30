@@ -1,0 +1,138 @@
+/* Responsive design utilities */
+
+/* Mobile-first approach */
+@media (max-width: 480px) {
+    #app-container {
+        padding: var(--spacing-medium);
+    }
+    
+    .vellynne-letter {
+        padding: var(--spacing-medium);
+        margin: 0;
+        border-radius: 4px;
+    }
+    
+    .sender-title {
+        font-size: 1.8rem;
+    }
+    
+    .sender-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .letter-metadata {
+        font-size: 0.9rem;
+    }
+    
+    .letter-paragraph p {
+        text-indent: 1rem;
+        font-size: 1rem;
+    }
+    
+    .signature-name {
+        font-size: 1.5rem;
+    }
+    
+    /* Stack metadata vertically on mobile */
+    .letter-metadata {
+        gap: var(--spacing-small);
+    }
+}
+
+/* Tablet styles */
+@media (min-width: 481px) and (max-width: 768px) {
+    #app-container {
+        padding: var(--spacing-large) var(--spacing-medium);
+    }
+    
+    .vellynne-letter {
+        padding: var(--spacing-large) var(--spacing-medium);
+    }
+    
+    .sender-title {
+        font-size: 2rem;
+    }
+    
+    .letter-paragraph p {
+        text-indent: 1.5rem;
+    }
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+    .letter-metadata {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: var(--spacing-medium);
+        align-items: center;
+    }
+    
+    .letter-date {
+        justify-self: start;
+    }
+    
+    .recipient-info {
+        justify-self: center;
+    }
+    
+    .delivery-method {
+        justify-self: end;
+        text-align: right;
+    }
+}
+
+/* Large desktop styles */
+@media (min-width: 1200px) {
+    .vellynne-letter {
+        max-width: 900px;
+        padding: calc(var(--spacing-large) * 1.5);
+    }
+    
+    .sender-title {
+        font-size: 2.8rem;
+    }
+    
+    .letter-paragraph p {
+        font-size: 1.15rem;
+        line-height: 1.8;
+    }
+}
+
+/* Print styles */
+@media print {
+    body {
+        background: white !important;
+    }
+    
+    #app-container {
+        background: none !important;
+        padding: 0 !important;
+    }
+    
+    .vellynne-letter {
+        box-shadow: none !important;
+        background: white !important;
+        max-width: none !important;
+        margin: 0 !important;
+    }
+    
+    .tooltip-container {
+        display: none !important;
+    }
+    
+    .character-ref,
+    .location-ref,
+    .item-ref,
+    .event-ref {
+        border-bottom: none !important;
+        cursor: text !important;
+    }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}

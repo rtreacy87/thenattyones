@@ -1,0 +1,101 @@
+/* Theme management utilities */
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-ink: #e8e8e8;
+        --color-faded-ink: #a0a0a0;
+        --color-accent: #d4a574;
+    }
+    
+    .vellynne-letter {
+        background: rgba(40, 40, 40, 0.95);
+        color: var(--color-ink);
+    }
+    
+    .letter-metadata {
+        background: rgba(212, 165, 116, 0.1);
+    }
+    
+    #loading-indicator {
+        color: var(--color-ink);
+    }
+}
+
+/* Theme switching classes */
+.theme-light {
+    --color-ink: #2c2c2c;
+    --color-faded-ink: #666;
+    --color-accent: #8b4513;
+}
+
+.theme-dark {
+    --color-ink: #e8e8e8;
+    --color-faded-ink: #a0a0a0;
+    --color-accent: #d4a574;
+}
+
+.theme-sepia {
+    --color-ink: #5c4b37;
+    --color-faded-ink: #8b7355;
+    --color-accent: #8b4513;
+    --paper-background: url('../assets/paper-sepia.jpg');
+}
+
+/* Custom property animations */
+.theme-transition {
+    transition: 
+        color var(--transition-speed) ease,
+        background-color var(--transition-speed) ease,
+        border-color var(--transition-speed) ease;
+}
+
+/* Apply transition to theme-sensitive elements */
+.vellynne-letter,
+.letter-metadata,
+.tooltip-content,
+.character-ref,
+.location-ref,
+.item-ref,
+.event-ref {
+    @extend .theme-transition;
+}
+
+/* Focus ring color adaptation */
+body.theme-dark :focus {
+    outline-color: var(--color-accent);
+}
+
+/* Selection color adaptation */
+body.theme-dark ::selection {
+    background: rgba(212, 165, 116, 0.3);
+}
+
+/* Reduced motion theme */
+.theme-minimal-motion {
+    --transition-speed: 0.1s;
+}
+
+.theme-minimal-motion * {
+    animation-duration: 0.1s !important;
+    transition-duration: 0.1s !important;
+}
+
+/* High contrast theme */
+.theme-high-contrast {
+    --color-ink: #000;
+    --color-faded-ink: #333;
+    --color-accent: #0000ff;
+}
+
+.theme-high-contrast .vellynne-letter {
+    background: #fff;
+    border: 2px solid #000;
+}
+
+.theme-high-contrast .character-ref,
+.theme-high-contrast .location-ref,
+.theme-high-contrast .item-ref,
+.theme-high-contrast .event-ref {
+    border-bottom: 2px solid var(--color-accent);
+}

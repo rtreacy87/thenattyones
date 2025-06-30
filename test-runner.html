@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D Letter Project - Test Runner</title>
+    <style>
+        body { 
+            font-family: 'Courier New', monospace; 
+            background: #1e1e1e; 
+            color: #d4d4d4; 
+            padding: 20px; 
+        }
+        .test-results { 
+            background: #2d2d30; 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin: 10px 0; 
+        }
+        .pass { color: #4fc3f7; }
+        .fail { color: #f44336; }
+        .section { 
+            border-left: 3px solid #4fc3f7; 
+            padding-left: 15px; 
+            margin: 20px 0; 
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 D&D Letter Project Test Suite</h1>
+    <div id="test-output"></div>
+    <button onclick="runAllTests()" style="background: #4fc3f7; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Run All Tests</button>
+    
+    <script type="module">
+        import { TestRunner } from './tests/test-runner.js';
+        
+        window.runAllTests = async function() {
+            const output = document.getElementById('test-output');
+            output.innerHTML = '<div class="test-results">🚀 Running tests...</div>';
+            
+            const runner = new TestRunner(output);
+            await runner.runAllTests();
+        };
+    </script>
+</body>
+</html>

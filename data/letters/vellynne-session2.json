@@ -1,0 +1,59 @@
+{
+    "metadata": {
+        "id": "vellynne-session2",
+        "sender": {
+            "name": "Vellynne Harpell",
+            "title": "Correspondence from Vellynne Harpell",
+            "subtitle": "Tenth Black Staff of Blackstaff Academy"
+        },
+        "recipient": "Rothbart",
+        "date": {
+            "datetime": "1489",
+            "display": "1489 DR, Hammer (Second Tenday)"
+        },
+        "deliveryMethod": "Delivered by snowy owl familiar to the Northlook Inn",
+        "session": 2,
+        "campaign": "icewind-dale"
+    },
+    "content": {
+        "greeting": "Dear {character:rothbart},",
+        "paragraphs": [
+            {
+                "id": "1",
+                "type": "body",
+                "text": "I trust this missive finds you well-rested after your eventful journey from {location:east_haven}. Word travels quickly through {location:bryn_shander}, and your party's heroic escort of seven hundred refugees has not gone unnoticed. The town buzzes with tales of your group's valor against the {event:vampire_yeti_attack}."
+            },
+            {
+                "id": "2", 
+                "type": "body",
+                "text": "Following our meeting in {location:bryn_shander}, I took the liberty of returning to the battlefield to retrieve the vampire brides' remains for study. Such specimens rarely present themselves for examination, and I suspect their condition may reveal crucial intelligence about the undead threat we face. I will keep you apprised of any findings that emerge from my research. How curious that a being touched by undeath should prove so effective at thwarting vampiric predators—your divine powers clearly burned particularly bright against those pale-skinned seductresses."
+            },
+            {
+                "id": "3",
+                "type": "body", 
+                "text": "The magical theorist in me is absolutely fascinated by your acquisition of those {item:netherese_stones} from {location:targos}. The stones you carry represent some of the most sophisticated enchantment work from the fallen empire—devices capable of anchoring tremendous magical energies to specific locations. Your visit to {location:black_iron_blades} was quite the spectacle, I'm told. The transformation of that {item:dragon_heart} into those rather impressive {item:radiant_bracers} must have been remarkable to witness."
+            },
+            {
+                "id": "4",
+                "type": "body",
+                "text": "I would be most interested to hear your firsthand account of the audience with {character:duvessa}, particularly regarding the political maneuvering you witnessed. My sources suggest {character:naerth}'s presence complicated matters considerably. Did your enhanced senses detect anything unusual about the {location:targos} delegation? Such intelligence could prove valuable as we navigate the increasingly treacherous political landscape of the Ten Towns."
+            },
+            {
+                "id": "5",
+                "type": "body",
+                "text": "Your party's newfound wealth—{item:diamonds}, I hear—positions you perfectly for the challenges ahead. Though I suspect you view my research with distaste, the practical applications of necromantic knowledge may prove essential in dealing with both the undead threat at {location:reghed_glacier} and our upcoming rendezvous with your {character:illithid} acquaintance. Sometimes the most distasteful tools prove the most effective."
+            },
+            {
+                "id": "6",
+                "type": "body",
+                "text": "I look forward to our meeting at the {location:northlook_inn}, where we can discuss strategy for locating {character:dzaan}'s spire and accessing the {item:nautiloid}. The threads of fate seem to be drawing together—vampire masters, ancient cities, and aberrant allies. Quite the tapestry we're weaving, wouldn't you agree?"
+            }
+        ],
+        "closing": "With anticipation of our collaboration,",
+        "signature": {
+            "name": "Vellynne Harpell",
+            "title": "Tenth Black Staff of Blackstaff Academy"
+        },
+        "postscript": "I've heard remarkable things about a new {item:mechanical_arm} fighting technique. Such adaptability in combat suggests you're becoming more comfortable with unconventional solutions—a promising development for what lies ahead."
+    }
+}
