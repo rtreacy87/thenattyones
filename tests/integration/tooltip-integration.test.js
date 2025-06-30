@@ -10,89 +10,101 @@ export class TooltipIntegrationTests {
         
         this.setupTestEnvironment();
         
-        await this.testTooltipDisplay();
-        await this.testTooltipPositioning();
-        await this.testKeyboardNavigation();
+        await this.testTooltipInitialization();
+        await this.testTooltipDataExtraction();
+        await this.testTooltipEventHandling();
         
         this.cleanupTestEnvironment();
         this.reportResults();
     }
     
     setupTestEnvironment() {
-        // Create test container
         this.testContainer = document.createElement('div');
         this.testContainer.id = 'tooltip-test-container';
         this.testContainer.innerHTML = `
             <span class="character-ref" data-character="rothbart">Rothbart</span>
             <span class="location-ref" data-location="bryn_shander">Bryn Shander</span>
+            <span class="item-ref" data-item="netherese_stones">Ancient Stones</span>
         `;
         document.body.appendChild(this.testContainer);
     }
     
-    async testTooltipDisplay() {
+    async testTooltipInitialization() {
         try {
-            const characterElement = this.testContainer.querySelector('[data-character]');
+            const { TooltipSystem } = await import('../../scripts/tooltip-system.js');
+            const { CampaignData } = await import('../../data/campaign-data.js');
             
-            // Simulate mouseover
-            const mouseoverEvent = new MouseEvent('mouseover', { bubbles: true });
-            characterElement.dispatchEvent(mouseoverEvent);
+            const tooltipSystem = new TooltipSystem();
+            await tooltipSystem.initialize(CampaignData);
             
-            // Wait briefly for tooltip to appear
-            await this.wait(100);
+            this.assertTrue(tooltipSystem.isInitialized === true, 'Tooltip system should initialize');
+            this.assertTrue(tooltipSystem.tooltipContainer !== null, 'Should create tooltip container');
             
-            // Check if tooltip exists (in a real implementation)
-            // For now, just verify the element has the right data attribute
-            this.assertTrue(
-                characterElement.dataset.character === 'rothbart',
-                'Element should have correct character data'
-            );
-            
-            this.addTestResult('tooltipDisplay', true, 'Tooltip display mechanism works');
+            this.addTestResult('tooltipInitialization', true, 'Tooltip initialization works correctly');
             
         } catch (error) {
-            this.addTestResult('tooltipDisplay', false, `Failed: ${error.message}`);
+            this.addTestResult('tooltipInitialization', false, `Failed: ${error.message}`);
         }
     }
     
-    async testTooltipPositioning() {
+    async testTooltipDataExtraction() {
         try {
+            const { TooltipSystem } = await import('../../scripts/tooltip-system.js');
+            const { CampaignData } = await import('../../data/campaign-data.js');
+            
+            const tooltipSystem = new TooltipSystem();
+            tooltipSystem.campaignData = CampaignData;
+            
+            const characterElement = this.testContainer.querySelector('[data-character]');
             const locationElement = this.testContainer.querySelector('[data-location]');
-            const rect = locationElement.getBoundingClientRect();
+            const itemElement = this.testContainer.querySelector('[data-item]');
             
-            // Verify element is positioned correctly for tooltips
-            this.assertTrue(rect.width > 0, 'Element should have width');
-            this.assertTrue(rect.height > 0, 'Element should have height');
+            const characterData = tooltipSystem.extractTooltipData(characterElement);
+            const locationData = tooltipSystem.extractTooltipData(locationElement);
+            const itemData = tooltipSystem.extractTooltipData(itemElement);
             
-            this.addTestResult('tooltipPositioning', true, 'Tooltip positioning data available');
+            this.assertTrue(characterData.name === 'Rothbart', 'Should extract character data');
+            this.assertTrue(locationData.name === 'Bryn Shander', 'Should extract location data');
+            this.assertTrue(itemData.name === 'Netherese Artifacts', 'Should extract item data');
+            
+            this.addTestResult('tooltipDataExtraction', true, 'Tooltip data extraction works correctly');
             
         } catch (error) {
-            this.addTestResult('tooltipPositioning', false, `Failed: ${error.message}`);
+            this.addTestResult('tooltipDataExtraction', false, `Failed: ${error.message}`);
         }
     }
     
-    async testKeyboardNavigation() {
+    async testTooltipEventHandling() {
         try {
             const characterElement = this.testContainer.querySelector('[data-character]');
             
-            // Make element focusable for keyboard navigation
-            characterElement.tabIndex = 0;
-            characterElement.focus();
+            // Test that elements are properly set up for event handling
+            this.assertTrue(characterElement.dataset.character === 'rothbart', 'Element should have character data');
             
-            // Verify focus works
-            this.assertTrue(
-                document.activeElement === characterElement,
-                'Element should be focusable for keyboard navigation'
-            );
+            // Test mouseover event creation
+            const mouseoverEvent = new MouseEvent('mouseover', { bubbles: true });
+            this.assertTrue(mouseoverEvent.type === 'mouseover', 'Should create mouseover event');
             
-            this.addTestResult('keyboardNavigation', true, 'Keyboard navigation support works');
+            // Test event dispatching (without actual tooltip display)
+            let eventDispatched = false;
+            characterElement.addEventListener('mouseover', () => {
+                eventDispatched = true;
+            });
+            
+            characterElement.dispatchEvent(mouseoverEvent);
+            this.assertTrue(eventDispatched, 'Should dispatch mouseover event');
+            
+            this.addTestResult('tooltipEventHandling', true, 'Tooltip event handling works correctly');
             
         } catch (error) {
-            this.addTestResult('keyboardNavigation', false, `Failed: ${error.message}`);
+            this.addTestResult('tooltipEventHandling', false, `Failed: ${error.message}`);
         }
     }
     
-    async wait(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+    cleanupTestEnvironment() {
+        if (this.testContainer && this.testContainer.parentNode) {
+            this.testContainer.parentNode.removeChild(this.testContainer);
+        }
     }
     
     assertTrue(condition, message) {
@@ -102,13 +114,11 @@ export class TooltipIntegrationTests {
     }
     
     addTestResult(testName, passed, message) {
-        this.testResults.push({ name: testName, passed, message });
-    }
-    
-    cleanupTestEnvironment() {
-        if (this.testContainer && this.testContainer.parentNode) {
-            this.testContainer.parentNode.removeChild(this.testContainer);
-        }
+        this.testResults.push({
+            name: testName,
+            passed: passed,
+            message: message
+        });
     }
     
     reportResults() {

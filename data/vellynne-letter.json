@@ -1,0 +1,57 @@
+{
+    "metadata": {
+        "id": "vellynne-session2",
+        "sender": {
+            "name": "Vellynne Harpell",
+            "title": "Correspondence from Vellynne Harpell",
+            "subtitle": "Tenth Black Staff of Blackstaff Academy"
+        },
+        "recipient": "Rothbart",
+        "date": {
+            "datetime": "1489",
+            "display": "1489 DR, Hammer (Second Tenday)"
+        },
+        "deliveryMethod": "Delivered by snowy owl familiar to the Northlook Inn"
+    },
+    "content": {
+        "greeting": "Dear {character:rothbart},",
+        "paragraphs": [
+            {
+                "id": "1",
+                "type": "body",
+                "text": "I trust this missive finds you well-rested after your eventful journey from {location:east_haven}. Word travels quickly through {location:bryn_shander}, and your party's heroic escort of seven hundred refugees has not gone unnoticed. The town buzzes with tales of your group's valor against the vampire-yeti assault."
+            },
+            {
+                "id": "2", 
+                "type": "body",
+                "text": "Following our meeting in {location:bryn_shander}, I took the liberty of returning to the battlefield to retrieve the vampire brides' remains for study. Such specimens rarely present themselves for examination, and I suspect their condition may reveal crucial intelligence about the undead threat we face."
+            },
+            {
+                "id": "3",
+                "type": "body",
+                "text": "The magical theorist in me is absolutely fascinated by your acquisition of those {item:netherese_stones} from {location:targos}. The stones you carry represent some of the most sophisticated enchantment work from the fallen empire—devices capable of anchoring tremendous magical energies to specific locations."
+            },
+            {
+                "id": "4",
+                "type": "body",
+                "text": "Your visit to {location:black_iron_blades} was quite the spectacle, I'm told. The transformation of that {item:dragon_heart} into those rather impressive bracers must have been remarkable to witness."
+            },
+            {
+                "id": "5",
+                "type": "body",
+                "text": "I would be most interested to hear your firsthand account of the audience with Speaker {character:duvessa}, particularly regarding the political maneuvering you witnessed. My sources suggest {character:naerth}'s presence complicated matters considerably."
+            },
+            {
+                "id": "6",
+                "type": "body",
+                "text": "Your party's newfound wealth—ten thousand gold in diamonds, I hear—positions you perfectly for the challenges ahead. Though I suspect you view my research with distaste, the practical applications of necromantic knowledge may prove essential in dealing with both the undead threat at {location:reghed_glacier} and our upcoming rendezvous with your {character:illithid} acquaintance."
+            }
+        ],
+        "closing": "With anticipation of our collaboration,",
+        "signature": {
+            "name": "Vellynne Harpell",
+            "title": "Tenth Black Staff of Blackstaff Academy"
+        },
+        "postscript": "I've heard remarkable things about a new three-armed fighting technique. Such adaptability in combat suggests you're becoming more comfortable with unconventional solutions—a promising development for what lies ahead."
+    }
+}

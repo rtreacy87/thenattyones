@@ -1,74 +1,86 @@
-// Centralized campaign data with validation
+// Centralized campaign data
 export class CampaignData {
     static characters = new Map([
         ['rothbart', {
             name: 'Rothbart',
             type: 'Dampir Paladin',
-            description: 'Undead-touched holy warrior with complex moral code',
-            relationships: ['vellynne', 'party_member'],
-            abilities: ['divine_sense', 'vampire_resistance'],
-            sessionIntroduced: 1
+            description: 'Undead-touched holy warrior with complex moral code'
         }],
         ['duvessa', {
             name: 'Duvessa Shane', 
             type: 'Town Speaker',
             description: 'Leader of Bryn Shander, political ally',
-            location: 'bryn_shander',
-            role: 'quest_giver',
-            sessionIntroduced: 2
+            location: 'bryn_shander'
         }],
         ['naerth', {
             name: 'Naerth Maxildannar',
-            type: 'Town Speaker', 
+            type: 'Town Speaker',
             description: 'Evil Speaker of Targos and political rival',
-            location: 'targos',
-            allegiance: 'zentarim',
-            sessionIntroduced: 2
+            location: 'targos'
+        }],
+        ['vellynne', {
+            name: 'Vellynne Harpell',
+            type: 'Necromancer',
+            description: 'Tenth Black Staff of Blackstaff Academy'
+        }],
+        ['illithid', {
+            name: 'Freed Mind Flayer',
+            type: 'Aberration',
+            description: 'Mind flayer ally with Nautiloid ship'
         }]
     ]);
     
     static locations = new Map([
         ['bryn_shander', {
             name: 'Bryn Shander',
-            type: 'fortified_town',
-            description: 'Central hub for Ten Towns defense',
-            status: 'under_siege_preparations',
-            population: 'refugee_center',
-            sessionsFeatured: [1, 2]
+            type: 'Fortified Town',
+            description: 'Central hub for Ten Towns defense'
+        }],
+        ['east_haven', {
+            name: 'East Haven',
+            type: 'Destroyed Town',
+            description: 'Former town destroyed by dragon attack'
+        }],
+        ['targos', {
+            name: 'Targos',
+            type: 'Town',
+            description: 'Controlled by Naerth Maxildannar'
+        }],
+        ['black_iron_blades', {
+            name: 'Black Iron Blades',
+            type: 'Weapons Shop',
+            description: 'Magical weapons and items shop'
         }],
         ['reghed_glacier', {
-            name: 'Reghed Glacier', 
-            type: 'frozen_wasteland',
-            description: 'Treacherous territory with ancient secrets',
-            threats: ['vampire_forces', 'netherese_ruins'],
-            accessibility: 'currently_impassable',
-            sessionsFeatured: [2]
+            name: 'Reghed Glacier',
+            type: 'Frozen Wasteland', 
+            description: 'Treacherous territory with ancient secrets'
         }]
     ]);
     
     static items = new Map([
         ['netherese_stones', {
             name: 'Netherese Artifacts',
-            type: 'ancient_magic_items', 
-            description: 'Keys to Ythryn with power amplification',
-            abilities: ['space_time_anchoring', 'city_access'],
-            sessionAcquired: 2
+            type: 'Ancient Magic Items',
+            description: 'Keys to Ythryn with power amplification abilities'
         }],
-        ['radiant_bracers', {
-            name: 'Bracers of Radiant Exuberance',
-            type: 'magical_bracers',
-            description: 'Cold resistance and enhanced magic',
-            effects: ['fire_radiant_damage_boost', 'cold_resistance'],
-            sessionCreated: 2
+        ['dragon_heart', {
+            name: 'Red Dragon Heart',
+            type: 'Crafting Material',
+            description: 'Powerful magical component from slain dragon'
         }]
     ]);
     
-    // Access methods with validation
+    static async initialize() {
+        console.log('CampaignData initialized with', this.characters.size, 'characters,', this.locations.size, 'locations, and', this.items.size, 'items');
+        return true;
+    }
+    
     static getCharacter(id) {
         const character = this.characters.get(id);
         if (!character) {
             console.warn(`Character not found: ${id}`);
-            return { name: id, type: 'unknown', description: 'Character data not available' };
+            return { name: id, type: 'Unknown', description: 'Character data not available' };
         }
         return character;
     }
@@ -77,7 +89,7 @@ export class CampaignData {
         const location = this.locations.get(id);
         if (!location) {
             console.warn(`Location not found: ${id}`);
-            return { name: id, type: 'unknown', description: 'Location data not available' };
+            return { name: id, type: 'Unknown', description: 'Location data not available' };
         }
         return location;
     }
@@ -86,7 +98,7 @@ export class CampaignData {
         const item = this.items.get(id);
         if (!item) {
             console.warn(`Item not found: ${id}`);
-            return { name: id, type: 'unknown', description: 'Item data not available' };
+            return { name: id, type: 'Unknown', description: 'Item data not available' };
         }
         return item;
     }

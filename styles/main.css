@@ -17,7 +17,7 @@
 :root {
     --paper-background: url('../assets/paper.jpg');
     --signature-font: 'BrotherSignature', serif;
-    --body-font: 'BrotherSignature', serif;
+    --body-font: 'Times New Roman', serif;
     --color-ink: #2c2c2c;
     --color-faded-ink: #666;
     --color-accent: #8b4513;
@@ -60,4 +60,8 @@
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+.vellynne-letter {
+    background: transparent !important;
 }

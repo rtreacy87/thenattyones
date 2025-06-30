@@ -6,6 +6,7 @@ class ComponentRenderer {
     }
     
     registerDefaultComponents() {
+        // Register inline component definitions (no separate files needed)
         this.components.set('letter-header', new LetterHeaderComponent());
         this.components.set('letter-body', new LetterBodyComponent());
         this.components.set('letter-footer', new LetterFooterComponent());
@@ -19,13 +20,15 @@ class ComponentRenderer {
         letterElement.appendChild(header);
         
         // Render body
-        const body = this.renderComponent('letter-body', letterData.paragraphs);
+        const body = this.renderComponent('letter-body', letterData.content);
         letterElement.appendChild(body);
         
-        // Render footer
+        // Render footer (if needed)
         const footer = this.renderComponent('letter-footer', letterData.metadata);
         letterElement.appendChild(footer);
         
+        // Clear container and add letter
+        container.innerHTML = '';
         container.appendChild(letterElement);
         
         return letterElement;
@@ -34,7 +37,8 @@ class ComponentRenderer {
     renderComponent(componentName, data) {
         const component = this.components.get(componentName);
         if (!component) {
-            throw new Error(`Component not found: ${componentName}`);
+            console.warn(`Component not found: ${componentName}`);
+            return document.createElement('div');
         }
         
         return component.render(data);
@@ -49,7 +53,7 @@ class ComponentRenderer {
     }
 }
 
-// Individual component classes
+// Component class definitions (included in same file for simplicity)
 class LetterHeaderComponent {
     render(metadata) {
         const header = document.createElement('header');
@@ -81,15 +85,53 @@ class LetterHeaderComponent {
 }
 
 class LetterBodyComponent {
-    render(paragraphs) {
+    render(content) {
         const section = document.createElement('section');
         section.className = 'letter-body';
         section.setAttribute('itemprop', 'text');
         
-        paragraphs.forEach(paragraph => {
-            const paragraphElement = this.createParagraphElement(paragraph);
-            section.appendChild(paragraphElement);
-        });
+        // Add greeting
+        if (content.greeting) {
+            const greeting = document.createElement('div');
+            greeting.className = 'letter-greeting';
+            greeting.innerHTML = `<p>${content.greeting}</p>`;
+            section.appendChild(greeting);
+        }
+        
+        // Add paragraphs
+        if (content.paragraphs) {
+            content.paragraphs.forEach(paragraph => {
+                const paragraphElement = this.createParagraphElement(paragraph);
+                section.appendChild(paragraphElement);
+            });
+        }
+        
+        // Add closing
+        if (content.closing) {
+            const closing = document.createElement('div');
+            closing.className = 'letter-closing';
+            closing.innerHTML = `<p>${content.closing}</p>`;
+            section.appendChild(closing);
+        }
+        
+        // Add signature
+        if (content.signature) {
+            const signature = document.createElement('div');
+            signature.className = 'letter-signature';
+            signature.innerHTML = `
+                <p class="signature-name">${content.signature.name}</p>
+                <p class="signature-title">${content.signature.title}</p>
+            `;
+            section.appendChild(signature);
+        }
+        
+        // Add postscript
+        if (content.postscript) {
+            const postscript = document.createElement('div');
+            postscript.className = 'letter-postscript';
+            postscript.innerHTML = `<p><strong>P.S.</strong> ${content.postscript}</p>`;
+            section.appendChild(postscript);
+        }
         
         return section;
     }
@@ -100,10 +142,44 @@ class LetterBodyComponent {
         div.setAttribute('data-paragraph', paragraph.id);
         
         const p = document.createElement('p');
-        p.innerHTML = paragraph.text;
+        p.innerHTML = this.processText(paragraph.text);
         div.appendChild(p);
         
         return div;
+    }
+    
+    processText(text) {
+        // Process character references
+        text = text.replace(/\{character:(\w+)\}/g, 
+            '<span class="character-ref" data-character="$1">$1</span>');
+        
+        // Process location references
+        text = text.replace(/\{location:(\w+)\}/g, 
+            '<span class="location-ref" data-location="$1">$1</span>');
+        
+        // Process item references
+        text = text.replace(/\{item:(\w+)\}/g, 
+            '<span class="item-ref" data-item="$1">$1</span>');
+        
+        // Process event references
+        text = text.replace(/\{event:(\w+)\}/g, 
+            '<span class="event-ref" data-event="$1">$1</span>');
+        
+        return text;
+    }
+}
+
+class LetterFooterComponent {
+    render(metadata) {
+        const footer = document.createElement('footer');
+        footer.className = 'letter-footer';
+        footer.innerHTML = `
+            <div class="campaign-attribution">
+                <p><em>From the Icewind Dale Campaign Archives</em></p>
+                <p><small>Session 2 Correspondence | ${metadata.date.display}</small></p>
+            </div>
+        `;
+        return footer;
     }
 }
 

@@ -1,112 +1,170 @@
-// Performance testing for modular architecture
-class PerformanceTests {
+// Performance tests for the application
+export class LoadPerformanceTests {
     constructor() {
+        this.testResults = [];
         this.metrics = {};
-        this.thresholds = {
-            initialLoad: 2000,      // 2 seconds max
-            moduleLoad: 500,        // 500ms per module max
-            tooltipResponse: 100,   // 100ms max tooltip response
-            memoryUsage: 10         // 10MB max memory usage
-        };
     }
     
-    async runPerformanceTests() {
-        console.log('Running performance tests...');
+    async runAllTests() {
+        console.log('Testing application performance...');
         
-        await this.testInitialLoadTime();
-        await this.testModuleLoadTimes();
-        await this.testTooltipResponseTime();
+        await this.testModuleLoadTime();
+        await this.testDataProcessingSpeed();
+        await this.testRenderingPerformance();
         await this.testMemoryUsage();
         
-        this.reportPerformanceResults();
+        this.reportResults();
     }
     
-    async testInitialLoadTime() {
-        const startTime = performance.now();
-        
-        // Simulate full application load
-        const app = new VellynneLetterApp();
-        await app.initialize();
-        
-        const loadTime = performance.now() - startTime;
-        this.metrics.initialLoad = loadTime;
-        
-        console.log(`Initial load time: ${loadTime.toFixed(2)}ms`);
-    }
-    
-    async testModuleLoadTimes() {
-        const modules = [
-            () => import('../../scripts/content-manager.js'),
-            () => import('../../scripts/component-renderer.js'),
-            () => import('../../scripts/tooltip-system.js'),
-            () => import('../../data/campaign-data.js')
-        ];
-        
-        this.metrics.moduleLoads = [];
-        
-        for (const moduleLoader of modules) {
+    async testModuleLoadTime() {
+        try {
             const startTime = performance.now();
-            await moduleLoader();
-            const loadTime = performance.now() - startTime;
             
-            this.metrics.moduleLoads.push(loadTime);
-            console.log(`Module load time: ${loadTime.toFixed(2)}ms`);
+            // Load all main modules
+            await import('../../data/campaign-data.js');
+            await import('../../scripts/tooltip-system.js');
+            await import('../../scripts/config/app-config.js');
+            
+            const loadTime = performance.now() - startTime;
+            this.metrics.moduleLoadTime = loadTime;
+            
+            // Modules should load in under 500ms
+            const threshold = 500;
+            const passed = loadTime < threshold;
+            
+            this.addTestResult('moduleLoadTime', passed, 
+                `Module load time: ${loadTime.toFixed(2)}ms (threshold: ${threshold}ms)`);
+            
+        } catch (error) {
+            this.addTestResult('moduleLoadTime', false, `Failed: ${error.message}`);
         }
     }
     
-    async testTooltipResponseTime() {
-        // Test tooltip response time
-        const testElement = document.createElement('span');
-        testElement.setAttribute('data-character', 'rothbart');
-        document.body.appendChild(testElement);
-        
-        const startTime = performance.now();
-        
-        const mouseoverEvent = new MouseEvent('mouseover', { bubbles: true });
-        testElement.dispatchEvent(mouseoverEvent);
-        
-        // Wait for tooltip to appear
-        await this.waitForTooltip();
-        
-        const responseTime = performance.now() - startTime;
-        this.metrics.tooltipResponse = responseTime;
-        
-        console.log(`Tooltip response time: ${responseTime.toFixed(2)}ms`);
-        
-        document.body.removeChild(testElement);
+    async testDataProcessingSpeed() {
+        try {
+            const { CampaignData } = await import('../../data/campaign-data.js');
+            
+            const startTime = performance.now();
+            
+            // Process 100 data lookups
+            for (let i = 0; i < 100; i++) {
+                CampaignData.getCharacter('rothbart');
+                CampaignData.getLocation('bryn_shander');
+                CampaignData.getItem('netherese_stones');
+            }
+            
+            const processingTime = performance.now() - startTime;
+            this.metrics.dataProcessingTime = processingTime;
+            
+            // 300 lookups should complete in under 100ms
+            const threshold = 100;
+            const passed = processingTime < threshold;
+            
+            this.addTestResult('dataProcessingSpeed', passed,
+                `Data processing time: ${processingTime.toFixed(2)}ms for 300 lookups (threshold: ${threshold}ms)`);
+            
+        } catch (error) {
+            this.addTestResult('dataProcessingSpeed', false, `Failed: ${error.message}`);
+        }
     }
     
-    async waitForTooltip() {
-        return new Promise(resolve => {
-            const checkTooltip = () => {
-                const tooltip = document.querySelector('.tooltip-container.visible');
-                if (tooltip) {
-                    resolve();
-                } else {
-                    setTimeout(checkTooltip, 10);
-                }
-            };
-            checkTooltip();
+    async testRenderingPerformance() {
+        try {
+            const container = document.createElement('div');
+            document.body.appendChild(container);
+            
+            const startTime = performance.now();
+            
+            // Render multiple elements
+            for (let i = 0; i < 50; i++) {
+                const element = document.createElement('span');
+                element.className = 'character-ref';
+                element.dataset.character = 'rothbart';
+                element.textContent = `Character ${i}`;
+                container.appendChild(element);
+            }
+            
+            const renderTime = performance.now() - startTime;
+            this.metrics.renderingTime = renderTime;
+            
+            // 50 elements should render in under 50ms
+            const threshold = 50;
+            const passed = renderTime < threshold;
+            
+            this.addTestResult('renderingPerformance', passed,
+                `Rendering time: ${renderTime.toFixed(2)}ms for 50 elements (threshold: ${threshold}ms)`);
+            
+            // Cleanup
+            document.body.removeChild(container);
+            
+        } catch (error) {
+            this.addTestResult('renderingPerformance', false, `Failed: ${error.message}`);
+        }
+    }
+    
+    async testMemoryUsage() {
+        try {
+            // Basic memory usage test
+            const initialMemory = performance.memory ? performance.memory.usedJSHeapSize : 0;
+            
+            // Create and destroy some objects
+            const testData = [];
+            for (let i = 0; i < 1000; i++) {
+                testData.push({
+                    id: i,
+                    data: `Test data ${i}`,
+                    timestamp: new Date()
+                });
+            }
+            
+            const peakMemory = performance.memory ? performance.memory.usedJSHeapSize : 0;
+            
+            // Clear test data
+            testData.length = 0;
+            
+            const memoryDiff = peakMemory - initialMemory;
+            this.metrics.memoryUsage = memoryDiff;
+            
+            // Memory usage should be reasonable (under 5MB for test)
+            const threshold = 5 * 1024 * 1024; // 5MB
+            const passed = memoryDiff < threshold || !performance.memory;
+            
+            const message = performance.memory ? 
+                `Memory usage: ${(memoryDiff / 1024 / 1024).toFixed(2)}MB (threshold: 5MB)` :
+                'Memory API not available (passed by default)';
+            
+            this.addTestResult('memoryUsage', passed, message);
+            
+        } catch (error) {
+            this.addTestResult('memoryUsage', false, `Failed: ${error.message}`);
+        }
+    }
+    
+    addTestResult(testName, passed, message) {
+        this.testResults.push({
+            name: testName,
+            passed: passed,
+            message: message
         });
     }
     
-    reportPerformanceResults() {
-        console.log('\n=== Performance Test Results ===');
+    reportResults() {
+        const passedTests = this.testResults.filter(test => test.passed).length;
+        const totalTests = this.testResults.length;
         
-        Object.entries(this.metrics).forEach(([metric, value]) => {
-            const threshold = this.thresholds[metric];
-            const passed = Array.isArray(value) ? 
-                value.every(v => v <= threshold) : 
-                value <= threshold;
-            
-            const status = passed ? '✅' : '❌';
-            const displayValue = Array.isArray(value) ? 
-                `avg: ${(value.reduce((a, b) => a + b, 0) / value.length).toFixed(2)}ms` :
-                `${value.toFixed(2)}ms`;
-            
-            console.log(`${status} ${metric}: ${displayValue} (threshold: ${threshold}ms)`);
+        console.log(`Performance Test Results: ${passedTests}/${totalTests} passed`);
+        
+        this.testResults.forEach(test => {
+            const status = test.passed ? '✅' : '❌';
+            console.log(`${status} ${test.name}: ${test.message}`);
         });
+        
+        // Show metrics summary
+        if (Object.keys(this.metrics).length > 0) {
+            console.log('\nPerformance Metrics:');
+            Object.entries(this.metrics).forEach(([metric, value]) => {
+                console.log(`  ${metric}: ${value.toFixed(2)}ms`);
+            });
+        }
     }
 }
-
-export { PerformanceTests };

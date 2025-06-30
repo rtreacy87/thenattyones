@@ -1,4 +1,4 @@
-// Main test runner that coordinates all test suites
+// Main test runner with better error handling
 export class TestRunner {
     constructor(outputElement) {
         this.output = outputElement;
@@ -12,13 +12,8 @@ export class TestRunner {
         this.log('🧪 Starting D&D Letter Project Test Suite\n', 'section');
         
         try {
-            // Unit Tests
             await this.runUnitTests();
-            
-            // Integration Tests  
             await this.runIntegrationTests();
-            
-            // Performance Tests
             await this.runPerformanceTests();
             
             this.showFinalResults();
@@ -32,46 +27,39 @@ export class TestRunner {
     async runUnitTests() {
         this.log('📦 Running Unit Tests', 'section');
         
-        const { ContentManagerTests } = await import('./unit/content-manager.test.js');
-        const { CampaignDataTests } = await import('./unit/campaign-data.test.js');
-        const { ComponentRendererTests } = await import('./unit/component-renderer.test.js');
-        
-        const contentTests = new ContentManagerTests();
-        const dataTests = new CampaignDataTests();
-        const rendererTests = new ComponentRendererTests();
-        
-        await this.runTestSuite('ContentManager', contentTests);
-        await this.runTestSuite('CampaignData', dataTests);
-        await this.runTestSuite('ComponentRenderer', rendererTests);
+        // Try to load each test module with error handling
+        await this.tryRunTestSuite('ContentManager', () => import('./unit/content-manager.test.js'));
+        await this.tryRunTestSuite('CampaignData', () => import('./unit/campaign-data.test.js'));
+        await this.tryRunTestSuite('ComponentRenderer', () => import('./unit/component-renderer.test.js'));
     }
     
     async runIntegrationTests() {
         this.log('🔗 Running Integration Tests', 'section');
         
-        const { AppIntegrationTests } = await import('./integration/app-integration.test.js');
-        const { TooltipIntegrationTests } = await import('./integration/tooltip-integration.test.js');
-        
-        const appTests = new AppIntegrationTests();
-        const tooltipTests = new TooltipIntegrationTests();
-        
-        await this.runTestSuite('App Integration', appTests);
-        await this.runTestSuite('Tooltip Integration', tooltipTests);
+        await this.tryRunTestSuite('App Integration', () => import('./integration/app-integration.test.js'));
+        await this.tryRunTestSuite('Tooltip Integration', () => import('./integration/tooltip-integration.test.js'));
     }
     
     async runPerformanceTests() {
         this.log('⚡ Running Performance Tests', 'section');
         
-        const { LoadPerformanceTests } = await import('./performance/load-performance.test.js');
-        
-        const perfTests = new LoadPerformanceTests();
-        await this.runTestSuite('Load Performance', perfTests);
+        await this.tryRunTestSuite('Load Performance', () => import('./performance/load-performance.test.js'));
     }
     
-    async runTestSuite(suiteName, testInstance) {
+    async tryRunTestSuite(suiteName, moduleLoader) {
         try {
             this.log(`\n🧪 ${suiteName} Tests:`);
             
-            // Capture console output for test results
+            const module = await moduleLoader();
+            const TestClass = Object.values(module)[0]; // Get first export
+            
+            if (!TestClass) {
+                throw new Error(`No test class found in ${suiteName} module`);
+            }
+            
+            const testInstance = new TestClass();
+            
+            // Capture console output
             const originalLog = console.log;
             const testOutput = [];
             
@@ -79,7 +67,6 @@ export class TestRunner {
                 testOutput.push(args.join(' '));
             };
             
-            // Run the test suite
             await testInstance.runAllTests();
             
             // Restore console.log
@@ -90,6 +77,7 @@ export class TestRunner {
             
         } catch (error) {
             this.log(`❌ ${suiteName} test suite failed: ${error.message}`, 'fail');
+            console.error(`Error in ${suiteName}:`, error);
         }
     }
     
@@ -109,7 +97,6 @@ export class TestRunner {
                 suiteTotal++;
                 this.totalTests++;
             } else if (line.includes('Test Results:')) {
-                // Parse summary line
                 const match = line.match(/(\d+)\/(\d+) passed/);
                 if (match) {
                     this.log(`📊 ${suiteName}: ${match[1]}/${match[2]} tests passed\n`);
@@ -120,14 +107,16 @@ export class TestRunner {
     
     showFinalResults() {
         const duration = ((performance.now() - this.startTime) / 1000).toFixed(2);
-        const passRate = ((this.passedTests / this.totalTests) * 100).toFixed(1);
+        const passRate = this.totalTests > 0 ? ((this.passedTests / this.totalTests) * 100).toFixed(1) : 0;
         
         this.log(`\n🏁 Test Suite Complete`, 'section');
         this.log(`⏱️  Duration: ${duration}s`);
         this.log(`📊 Results: ${this.passedTests}/${this.totalTests} tests passed (${passRate}%)`);
         
-        if (this.passedTests === this.totalTests) {
+        if (this.passedTests === this.totalTests && this.totalTests > 0) {
             this.log(`🎉 All tests passed! Your D&D letter project is working perfectly.`, 'pass');
+        } else if (this.totalTests === 0) {
+            this.log(`⚠️  No tests were run. Check that test files exist.`, 'fail');
         } else {
             this.log(`⚠️  Some tests failed. Check the details above.`, 'fail');
         }
