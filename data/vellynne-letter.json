@@ -14,7 +14,7 @@
         "deliveryMethod": "Delivered by snowy owl familiar to the Northlook Inn"
     },
     "content": {
-        "greeting": "Dear {character:rothbart},",
+        "greeting": "Dear Rothbart,",
         "paragraphs": [
             {
                 "id": "1",
